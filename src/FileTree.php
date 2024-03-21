@@ -33,7 +33,7 @@ class FileTree
      */
     public function generateEncryptedUrl(string $originalDirectoryPath)
     {
-        $encryptedBinaryUrl = $this->hash->generateEncryptedUrl($originalDirectoryPath);
+        $encryptedBinaryUrl = $this->hash->generateURL($originalDirectoryPath);
 
         if ($encryptedBinaryUrl === null) {
             throw new FileTreeException('Failed to encrypt the original directory path.');
