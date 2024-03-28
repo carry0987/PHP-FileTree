@@ -7,6 +7,7 @@ use carry0987\FileTree\Exceptions\FileTreeException;
 class FileTree
 {
     private Hash $hash;
+    private bool $organize = false;
 
     const ENCRYPT_ALGORITHM = 'sha256';
     const CIPHER = 'aes-256-gcm';
@@ -23,6 +24,13 @@ class FileTree
         $this->hash->setCipher(self::CIPHER);
     }
 
+    public function setOrganize(bool $organize): self
+    {
+        $this->organize = $organize;
+
+        return $this;
+    }
+
     /**
      * Generate an encrypted URL via Hash.
      * @param string $originalDirectoryPath The original path of the file.
@@ -31,8 +39,12 @@ class FileTree
      * 
      * @throws FileTreeException If encryption fails or binary signature cannot be generated.
      */
-    public function generateEncryptedUrl(string $originalDirectoryPath)
+    public function generateEncryptedUrl(string $originalDirectoryPath): string
     {
+        if ($this->organize) {
+            $originalDirectoryPath = rtrim($originalDirectoryPath, '/').'::org';
+        }
+
         $encryptedBinaryUrl = $this->hash->generateURL($originalDirectoryPath);
 
         if ($encryptedBinaryUrl === null) {

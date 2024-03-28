@@ -8,10 +8,10 @@ $signatureSalt = 'ca0d2b3a2b990217cb336ef159fac050f54216d6dacc53509254e23abb1a8b
 
 $encryptor = new FileTree($signatureKey, $signatureSalt);
 
-$originalPath = 'test/hello-world';
+$originalPath = './';
 
 try {
-    $signedUrl = $encryptor->generateEncryptedUrl($originalPath);
+    $signedUrl = $encryptor->setOrganize(false)->generateEncryptedUrl($originalPath);
     echo 'http://127.0.0.1:3000' . $signedUrl;
 } catch (Exception $e) {
     // handle exceptions
